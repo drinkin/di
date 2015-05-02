@@ -1,5 +1,7 @@
 TEST?=./...
 
+default: test
+
 setup:
 	go get github.com/alecthomas/gometalinter
 	gometalinter --install
