@@ -1,10 +1,10 @@
+//Package rdis provides tools for redigo
 package rdis
 
 import (
 	"time"
 
 	"github.com/drinkin/di/env"
-	"github.com/drinkin/shop/src/lg"
 	"github.com/garyburd/redigo/redis"
 )
 
@@ -15,7 +15,6 @@ func PoolFromEnv() *redis.Pool {
 
 //NewPool creates a new redigo pool
 func NewPool(server, password string) *redis.Pool {
-	lg.Debug("Redis Connect", lg.F{"url": server})
 
 	return &redis.Pool{
 		MaxIdle:     3,
