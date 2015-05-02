@@ -4,5 +4,10 @@ go:
 
 sudo: false
 install:
+  - make setup
   - go get ./...
   - go get -t ./...
+
+after_success:
+  - ./cover.sh
+  - bash <(curl -s https://codecov.io/bash)

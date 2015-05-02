@@ -3,11 +3,12 @@ TEST?=./...
 default: test
 
 setup:
+	go get github.com/onsi/ginkgo/ginkgo
 	go get github.com/alecthomas/gometalinter
 	gometalinter --install
 
 test:
-	go test $(TEST) -parallel=4
+	ginkgo -r -cover
 
 testrace:
 	go test -race $(TEST)
