@@ -1,15 +1,17 @@
 #!/usr/bin/env bash
 
 set -eE -o pipefail
+shopt -s globstar
 
-PROJECT=$(basename "$(git rev-parse --show-toplevel)")
-COVER_TMP=$(mktemp -t "cover.$PROJECT.XXX")
+cd "$(git rev-parse --show-toplevel)"
 
-echo "mode: atomic" > "$COVER_TMP"
-for cp in $(find . -type f -name "*.coverprofile" | grep "${1:-""}");
-do
-  tail -n +2 "$cp" >> "$COVER_TMP"
+
+rm -rf /tmp/cover
+mkdir -p /tmp/cover
+
+
+for coverFile in ./**/*.coverprofile; do
+  out="/tmp/cover/$(basename "$coverFile" .coverprofile).html"
+  go tool cover -html "$coverFile" -o "$out"
+  command -v open >/dev/null 2>&1 && open "$out"
 done
-
-
-cat "$COVER_TMP" > coverage.txt
