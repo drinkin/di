@@ -7,6 +7,13 @@ type StringField struct {
 	Value string
 }
 
+func (f *StringField) Equal(v string) *StringField {
+	if f.Value != v {
+		f.F.FieldErr("equal")
+	}
+	return f
+}
+
 func (f *StringField) Enum(vals []string) *StringField {
 	if !str2.Slice(vals).Contains(f.Value) {
 		f.F.FieldErr("enum")

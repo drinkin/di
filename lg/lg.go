@@ -1,6 +1,9 @@
 package lg
 
 import (
+	"net/http"
+	"net/http/httputil"
+
 	"github.com/mgutz/logxi/v1"
 )
 
@@ -24,6 +27,12 @@ func Check(err error, args ...interface{}) {
 	if err != nil {
 		log.Fatal(err.Error(), args...)
 	}
+}
+
+func Response(r *http.Response) {
+	b, _ := httputil.DumpResponse(r, true)
+
+	log.Debug(string(b))
 }
 
 type F map[string]interface{}

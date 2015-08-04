@@ -1,6 +1,8 @@
 package lg
 
 import (
+	"net/http"
+	"net/http/httputil"
 	"time"
 
 	"github.com/mgutz/logxi/v1"
@@ -21,6 +23,12 @@ func (l *Logger) Start() *Stopwatch {
 		start:  time.Now(),
 		logger: l,
 	}
+}
+
+func (l *Logger) Response(r *http.Response) {
+	b, _ := httputil.DumpResponse(r, true)
+
+	l.Debug(string(b))
 }
 
 func (l *Logger) Check(err error, args ...interface{}) {
