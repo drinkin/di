@@ -1,38 +1,37 @@
 package lg
 
-import (
-	"net/http"
-	"net/http/httputil"
+import "net/http"
 
-	"github.com/mgutz/logxi/v1"
-)
+var DefaultLog *Logger
+
+func init() {
+	DefaultLog = New("~")
+}
 
 func Fatal(msg string, args ...interface{}) {
-	log.Fatal(msg, args...)
+	DefaultLog.Fatal(msg, args...)
 }
 
 func Warn(msg string, args ...interface{}) {
-	log.Warn(msg, args...)
+	DefaultLog.Warn(msg, args...)
 }
 
 func Info(msg string, args ...interface{}) {
-	log.Info(msg, args...)
+	DefaultLog.Info(msg, args...)
 }
 
 func Debug(msg string, args ...interface{}) {
-	log.Debug(msg, args...)
+	DefaultLog.Debug(msg, args...)
 }
 
 func Check(err error, args ...interface{}) {
 	if err != nil {
-		log.Fatal(err.Error(), args...)
+		DefaultLog.Fatal(err.Error(), args...)
 	}
 }
 
 func Response(r *http.Response) {
-	b, _ := httputil.DumpResponse(r, true)
-
-	log.Debug(string(b))
+	DefaultLog.Response(r)
 }
 
 type F map[string]interface{}
